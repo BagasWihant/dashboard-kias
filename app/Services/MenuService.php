@@ -26,6 +26,7 @@ class MenuService
                         'id' => $item->id,
                         'title' => $item->Menu,
                         'form' => $item->Form,
+                        'page' => $item->page,
                         'menu_code' => $item->menu_code,
                         'order' => $item->order,
                         'children' => [],
@@ -38,6 +39,7 @@ class MenuService
                     $result[$item->parent_id]['children'][] = [
                         'id' => $item->id,
                         'title' => $item->Menu,
+                        'page' => $item->page,
                         'form' => $item->Form,
                         'menu_code' => $item->menu_code,
                         'order' => $item->order,

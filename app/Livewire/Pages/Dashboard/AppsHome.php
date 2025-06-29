@@ -18,7 +18,8 @@ class AppsHome extends Component
         $title = DB::table('gm_system')->where('id', $this->id)->value('sys_name');
         return view('livewire.pages.dashboard.apps-home')->layout('layouts.app',[
             'menuItems' => $menuItems,
-            'title' => $title
+            'title' => $title,
+            'idApp' => $this->id
         ]);
     }
 }
