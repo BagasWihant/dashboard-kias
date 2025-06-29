@@ -1,9 +1,9 @@
 <div>
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
-        <div class="grid grid-cols-4 gap-4 mb-4">
+        <div class="grid grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
 
             @foreach ($apps as $app)
-                <a href="/url">
+                <a href="{{ route('apps-home',['id'=>$app->id])}}">
                     <div
                         class="flex flex-col items-center justify-center h-36 rounded-xl bg-gray-50 dark:bg-gray-800 p-3 
                             transition-all duration-300 ease-in-out transform hover:scale-105 
@@ -32,7 +32,7 @@
                             </g>
                         </svg>
                         <span
-                            class="mt-3 text-lg font-semibold text-gray-900 dark:text-white">{{ $app->sys_name }}</span>
+                            class="mt-3 text-lg font-semibold text-center text-gray-900 dark:text-white">{{ $app->sys_name }}</span>
                     </div>
                 </a>
             @endforeach

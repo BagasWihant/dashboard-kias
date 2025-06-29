@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'Warehouse') }} </title> --}}
-    <title>DASHBOARD </title>
+    <title>{{ $title ?? 'DASHBOARD' }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -58,10 +58,10 @@
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Neil Sims
+                                    <b>{{ auth()->user()->role }}</b>
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    neil.sims@flowbite.com
+                                    {{ auth()->user()->nama }}
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
@@ -71,13 +71,13 @@
                                         role="menuitem">Dashboard</a>
                                 </li>
                                 <li>
-                                    
+
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
 
                                         <a onclick="event.preventDefault(); this.closest('form').submit();"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                            role="menuitem">Sign out</a>
+                                            role="button">Sign out</a>
                                     </form>
                                 </li>
                             </ul>
@@ -91,7 +91,7 @@
     <aside id="logo-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-800 border-r border-gray-200 sm:translate-x-0"
         aria-label="Sidebar">
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-blue-800">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-blue-800" x-data="{ openMenu: null }">
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('dashboard') }}"
@@ -102,11 +102,13 @@
                             <path
                                 d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Overview</span>
-                        {{-- <span
-                            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">-</span> --}}
+                        <span class="flex-1 ms-3 whitespace-nowrap">Overview </span>
                     </a>
                 </li>
+                @if (isset($menuItems))
+                    @include('layouts.part.sidebar')
+                @endif
+
             </ul>
         </div>
     </aside>

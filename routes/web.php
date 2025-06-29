@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Livewire\Pages\Dashboard\AppsHome;
 use App\Livewire\Pages\Dashboard\Index;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -8,13 +9,14 @@ use Livewire\Volt\Volt;
 Route::middleware('auth')->group(function () {
     
     Route::get('/', Index::class)->name('dashboard');
+    Route::get('/apps/{id}', AppsHome::class)->name('apps-home');
 
     Route::view('profile', 'profile')
         ->name('profile');
 
     Route::post('/logout', function (Logout $logout) {
         $logout();
-
+    
         return redirect('/');
     })->name('logout');
 });

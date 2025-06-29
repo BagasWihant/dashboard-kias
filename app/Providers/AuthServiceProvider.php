@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Auth\CustomSanctumUser;
 use App\Auth\CustomUserProvider;
 use Illuminate\Auth\DatabaseUserProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,11 @@ class AuthServiceProvider extends ServiceProvider
         //         }
         //     };
         // });
+        Sanctum::usePersonalAccessTokenModel(\Laravel\Sanctum\PersonalAccessToken::class);
+
+        Sanctum::authenticateAccessTokensUsing(function ($token, $isValid) {
+            return CustomSanctumUser::find($token->tokenable_id);
+        });
 
         Auth::provider('custom', function ($app, array $config) {
             return new CustomUserProvider($config['model']);
