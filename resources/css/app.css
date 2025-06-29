@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+details[open] .arrow-down {
+    display: none;
+}
+details[open] .arrow-up {
+    display: inline;
+}

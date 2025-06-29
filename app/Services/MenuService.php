@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
@@ -8,8 +9,9 @@ class MenuService
 {
     public static function getMenuBySystemId($id)
     {
-        $key = 'menu-sys-' . $id;
-        return Cache::remember($key, 60 * 60, function () use ($id) {
+        $key    = 'menu-sys-' . $id;
+        $time   = 60 * 60 * 24; // 24 jam 
+        return Cache::remember($key, $time, function () use ($id) {
             $menuItems = DB::table('gm_menu')
                 ->where('system_id', $id)
                 ->where('active', 1)
