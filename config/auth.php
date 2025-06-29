@@ -66,8 +66,9 @@ return [
         ],
 
         'gm_users' => [
-            'driver' => 'plaintext',
-            'table' => 'gm_user',
+            'driver' => 'custom',
+            // 'table' => 'gm_user',
+            'model' => App\Auth\PlainUser::class
         ],
     ],
 

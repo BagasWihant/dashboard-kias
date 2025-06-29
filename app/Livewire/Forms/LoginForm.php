@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Forms;
 
-use App\Http\Controllers\Auth\PlainUser;
+use App\Auth\PlainUser;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +32,11 @@ class LoginForm extends Form
     {
         $this->ensureIsNotRateLimited();
 
-        $user = DB::table('gm_user')->where('nik', $this->nik)->first();
+        $user = DB::select('EXEC sp_Login :nik, :pw', ['nik' => $this->nik, 'pw' => $this->password]);
+        $id = DB::table('gm_user')->where('nik', $this->nik)->value('id');
 
-        if (! $user || $user->password !== $this->password) {
+        if (count($user) !== 1) {
+
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -44,14 +46,25 @@ class LoginForm extends Form
 
         RateLimiter::clear($this->throttleKey());
 
-        // Login manual tanpa Auth::attempt
-        $authUser = new PlainUser([
-            'id' => $user->id,
-            'nik' => $user->nik,
-            'password' => $user->password,
+        session([
+            'sp_user_data' => [
+                'nama' => $user[0]->nama,
+                'section' => $user[0]->Section,
+                'role' => $user[0]->Role,
+                'role_id' => $user[0]->role_id,
+            ]
         ]);
-        
-        Auth::guard('web')->login($authUser); 
+
+        $authUser = new PlainUser([
+            'section' => $user[0]->Section,
+            'role_id' => $user[0]->role_id,
+            'role' => $user[0]->Role,
+            'nik' => $user[0]->nik,
+            'nama' => $user[0]->nama,
+            'id' => $id
+        ]);
+
+        Auth::login($authUser);
     }
 
     /**
@@ -80,6 +93,6 @@ class LoginForm extends Form
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->nik).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->nik) . '|' . request()->ip());
     }
 }

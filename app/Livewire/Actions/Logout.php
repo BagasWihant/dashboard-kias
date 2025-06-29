@@ -13,7 +13,9 @@ class Logout
     public function __invoke(): void
     {
         // Auth::guard('web')->logout();
-        session()->forget(config('auth.session'));
+        Auth::logout();
+        session()->forget('sp_user_data');
+        // session()->forget(config('auth.session'));
         Session::invalidate();
         Session::regenerateToken();
     }
