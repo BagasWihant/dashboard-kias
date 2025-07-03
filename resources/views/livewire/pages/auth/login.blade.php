@@ -33,8 +33,8 @@ new #[Layout('layouts.guest')] class extends Component
     <!-- Background Gambar Perusahaan Full -->
     <div class="absolute inset-0 z-0">
         <img src="{{asset('/assets/bg.jpg')}}" alt="Company Background"
-            class="w-full h-full object-cover brightness-90 saturate-125" />
-        <div class="absolute inset-0 bg-gradient-to-tr from-slate-500/60 via-blue-500/50 to-purple-600/30 backdrop-blur-sm">
+            class="w-full h-full object-cover aspect-video brightness-90 saturate-125" />
+        <div class="absolute inset-0 bg-gradient-to-tr from-slate-500/50 via-blue-500/40 to-blue-600/20 backdrop-blur-sm">
         </div>
     </div>
 
@@ -84,7 +84,7 @@ new #[Layout('layouts.guest')] class extends Component
 
                 <button type="submit"
                     class="w-full py-2 rounded-3xl text-sm font-semibold text-indigo-200
-                   bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+                   bg-gradient-to-r from-blue-500 via-blue-700 to-blue-500
                    shadow-lg shadow-blue-500/30 transition-all duration-300
                    hover:brightness-125 hover:shadow-blue-500/50
                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
