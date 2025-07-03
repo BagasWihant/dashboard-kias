@@ -15,12 +15,7 @@
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- <style>
-    </style> --}}
     <style>
-        body {
-            background: radial-gradient(circle at top left, #1e3a8a, #000);
-        }
 
         @keyframes slideFade {
             0% {
