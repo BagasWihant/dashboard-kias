@@ -28,44 +28,74 @@ new #[Layout('layouts.guest')] class extends Component
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form wire:submit="login">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Nik')" />
-            <x-text-input wire:model="form.nik" id="nik" class="block mt-1 w-full" type="text" name="nik" required autofocus autocomplete="nik" />
-            <x-input-error :messages="$errors->get('form.nik')" class="mt-2" />
+
+
+    <!-- Background Gambar Perusahaan Full -->
+    <div class="absolute inset-0 z-0">
+        <img src="{{asset('/assets/bg.jpg')}}" alt="Company Background"
+            class="w-full h-full object-cover brightness-90 saturate-125" />
+        <div class="absolute inset-0 bg-gradient-to-tr from-slate-500/60 via-blue-500/50 to-purple-600/30 backdrop-blur-sm">
         </div>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <!-- Konten Login -->
+    <div class="relative z-10 flex items-center justify-center min-h-screen px-4 py-10">
+        <div
+            class="relative z-10 w-full max-w-md bg-white/30 backdrop-blur-sm border border-white/10 shadow-2xl rounded-2xl p-8 space-y-8 animate-slideFade">
 
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
 
-            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
+            <div class="text-center">
+                <x-application-logo class="w-16 h-16 mx-auto " />
+                <h2 class="mt-6 text-3xl font-bold tracking-tight text-black">Login ke SKIS</h2>
+                {{-- <p class="text-sm text-black">Gunakan akun perusahaan Anda</p> --}}
+            </div>
+
+            <form  wire:submit="login" class="space-y-6">
+                <div>
+                    <label for="nik" class="block text-sm font-medium text-black">NIK</label>
+                    <input wire:model="form.nik" id="nik" name="nik" type="text" required autofocus
+                        class="mt-1 w-full rounded-3xl bg-white/70 text-black border border-indigo-300/20
+                                  placeholder-black px-4 py-2 transition-all duration-300
+                                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400
+                                  shadow focus:shadow-[0_0_0_3px_rgba(236,72,153,0.2)]"
+                        placeholder="Masukkan NIK Anda" />
+                    <x-input-error :messages="$errors->get('form.nik')" class="mt-2 text-sm text-red-600" />
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-black">Password</label>
+                    <input wire:model="form.password" id="password" name="password" type="password" required
+                        class="mt-1 block w-full rounded-3xl bg-white/70 text-black border border-indigo-300/20 
+                    focus:ring-2 focus:ring-blue-500 focus:border-blue-400 focus:outline-none 
+                    transition-all duration-200 shadow-sm placeholder-black"
+                        placeholder="••••••••" />
+                    <x-input-error :messages="$errors->get('form.password')" class="mt-2 text-sm text-red-600" />
+                </div>
+
+                <div class="flex items-center justify-between text-sm text-black">
+                  
+
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="hover:underline" wire:navigate>
+                            Lupa password?
+                        </a>
+                    @endif
+                </div>
+
+                <button type="submit"
+                    class="w-full py-2 rounded-3xl text-sm font-semibold text-indigo-200
+                   bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+                   shadow-lg shadow-blue-500/30 transition-all duration-300
+                   hover:brightness-125 hover:shadow-blue-500/50
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Masuk
+                </button>
+            </form>
+
+            <p class="text-center text-xs text-black">&copy; {{ date('Y') }} {{ config('app.name') }}. All
+                rights reserved.</p>
+
         </div>
+    </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember" class="inline-flex items-center">
-                <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
 </div>
