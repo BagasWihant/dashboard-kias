@@ -51,10 +51,21 @@
                         </svg>
 
                     </button>
-                    <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
+                    <a href="{{ route('dashboard') }}" class="flex ms-2">
                         <span
                             class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Dashboard</span>
                     </a>
+                    @if (isset($title))
+                        <span
+                            class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">></span>
+                        <a href="{{ route('apps-home', ['id' => $idApp]) }}">
+
+                            <span
+                                class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                                {{ $title }}</span>
+                        </a>
+                    @endif
+
                 </div>
                 <div class="flex items-center">
                     <div class="flex items-center ms-3">
@@ -63,7 +74,8 @@
                                 class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <svg viewBox="0 0 24 24"  class="w-9 h-9 rounded-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg viewBox="0 0 24 24" class="w-9 h-9 rounded-full" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -92,7 +104,7 @@
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="#"
+                                    <a href="{{ route('dashboard') }}" onclick="window.__showLoader()"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Dashboard</a>
                                 </li>
@@ -100,10 +112,11 @@
 
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-
-                                        <a onclick="event.preventDefault(); this.closest('form').submit();"
+                                        <a onclick="event.preventDefault(); window.__showLoader(); this.closest('form').submit();"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                            role="button">Sign out</a>
+                                            role="button">
+                                            Sign out
+                                        </a>
                                     </form>
                                 </li>
                             </ul>
@@ -151,8 +164,13 @@
             {{ $slot }}
         </div>
     </div>
-
+    <script src="{{ asset('assets/alpine.js') }}" defer></script>
     <script>
+        window.__showLoader = () => {
+            const event = new CustomEvent('show-global-loader');
+            window.dispatchEvent(event);
+        }
+
         function sidebarComponent() {
             return {
                 sidebarOpen: false,
@@ -169,6 +187,16 @@
             };
         }
     </script>
+    <div x-data="{ show: false }" x-init="window.addEventListener('show-global-loader', () => show = true);
+    document.querySelectorAll('form[method=POST]:not([data-no-loading])')
+        .forEach(form => form.addEventListener('submit', () => show = true));">
+        <template x-if="show">
+            <div x-transition.opacity.scale.duration.300ms
+                class="fixed inset-0 z-50 bg-blue-400/30 backdrop-blur-md flex items-center justify-center">
+                <x-loading />
+            </div>
+        </template>
+    </div>
 
 </body>
 

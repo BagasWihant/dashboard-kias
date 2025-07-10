@@ -3,7 +3,7 @@
         <div class="grid grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
 
             @foreach ($apps as $app)
-                <a href="{{ route('apps-home', ['id' => $app->id]) }}">
+                <a href="{{ route('apps-home', ['id' => $app->id]) }}" onclick="window.__showLoader()">
                     <div
                         class="flex flex-col items-center justify-center h-36 rounded-xl bg-gray-50 dark:bg-gray-800 p-3 
                             transition-all duration-300 ease-in-out transform hover:scale-105 

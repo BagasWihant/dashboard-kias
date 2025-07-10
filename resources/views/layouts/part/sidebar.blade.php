@@ -22,7 +22,7 @@
         <ul x-show="openMenu === {{ $menu['id'] }}" x-collapse class="ml-3 mt-1 space-y-1 overflow-hidden" x-cloak>
             @foreach ($menu['children'] as $child)
                 <li>
-                    <a href="{{ route('apps-in-menu', ['id1' => $idApp, 'id2' => $child['id']]) }}"
+                    <a href="{{ route('apps-in-menu', ['id1' => $idApp, 'id2' => $child['id']]) }}" onclick="window.__showLoader()"
                         class="flex p-2 text-sm text-white rounded hover:bg-gray-100 hover:text-black transition">
                         <svg fill="currentColor" viewBox="0 0 24 24" class="shrink-0 w-5 h-5  hover:text-black"
                             xmlns="http://www.w3.org/2000/svg" id="right-sign" class="icon glyph" fill="#000000">

@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
-{
+new #[Layout('layouts.guest')] class extends Component {
     public LoginForm $form;
 
     /**
@@ -14,6 +13,7 @@ new #[Layout('layouts.guest')] class extends Component
      */
     public function login(): void
     {
+        sleep(.5);
         $this->validate();
 
         $this->form->authenticate();
@@ -32,17 +32,22 @@ new #[Layout('layouts.guest')] class extends Component
 
     <!-- Background Gambar Perusahaan Full -->
     <div class="absolute inset-0 z-0">
-        <img src="{{asset('/assets/bg.jpg')}}" alt="Company Background"
+        <img src="{{ asset('/assets/bg.jpg') }}" alt="Company Background"
             class="w-full h-full object-cover aspect-video brightness-90 saturate-125" />
-        <div class="absolute inset-0 bg-gradient-to-tr from-slate-500/50 via-blue-500/40 to-blue-600/20 backdrop-blur-sm">
+        <div
+            class="absolute inset-0 bg-gradient-to-tr from-slate-500/50 via-blue-500/40 to-blue-600/20 backdrop-blur-sm">
         </div>
     </div>
 
+
     <!-- Konten Login -->
     <div class="relative z-10 flex items-center justify-center min-h-screen px-4 py-10">
+        <div  x-transition.opacity.scale.duration.300ms wire:loading wire:target="login">
+            <x-loading/>
+        </div>
+
         <div
             class="relative z-10 w-full max-w-md bg-white/30 backdrop-blur-sm border border-white/10 shadow-2xl rounded-2xl p-8 space-y-8 animate-slideFade">
-
 
             <div class="text-center">
                 <x-application-logo class="w-16 h-16 mx-auto " />
@@ -50,7 +55,7 @@ new #[Layout('layouts.guest')] class extends Component
                 {{-- <p class="text-sm text-black">Gunakan akun perusahaan Anda</p> --}}
             </div>
 
-            <form  wire:submit="login" class="space-y-6">
+            <form wire:submit="login" class="space-y-6">
                 <div>
                     <label for="nik" class="block text-sm font-medium text-black">NIK</label>
                     <input wire:model="form.nik" id="nik" name="nik" type="text" required autofocus
@@ -73,7 +78,7 @@ new #[Layout('layouts.guest')] class extends Component
                 </div>
 
                 <div class="flex items-center justify-between text-sm text-black">
-                  
+
 
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}" class="hover:underline" wire:navigate>
