@@ -61,9 +61,17 @@
                         <a href="{{ route('apps-home', ['id' => $idApp]) }}">
 
                             <span
-                                class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                                class="ms-2 self-center text-xl font-semibold sm:text-2xl @if (!isset($menuTitle)) text-blue-500 @endif whitespace-nowrap dark:text-white">
                                 {{ $title }}</span>
                         </a>
+                    @endif
+                    @if (isset($menuTitle))
+                        <span class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">></span>
+                        <span class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">{{ $menuTitle }}</span>
+                        <span class="ms-2 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">></span>
+                        <span
+                            class="ms-2 self-center text-xl font-semibold sm:text-2xl text-blue-500 whitespace-nowrap">
+                            {{ $subMenuTitle ?? '' }}</span>
                     @endif
 
                 </div>
