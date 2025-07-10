@@ -63,7 +63,8 @@
                                 class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <svg viewBox="0 0 24 24"  class="w-9 h-9 rounded-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg viewBox="0 0 24 24" class="w-9 h-9 rounded-full" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -151,7 +152,7 @@
             {{ $slot }}
         </div>
     </div>
-
+    <script src="{{ asset('assets/alpine.js') }}" defer></script>
     <script>
         function sidebarComponent() {
             return {
