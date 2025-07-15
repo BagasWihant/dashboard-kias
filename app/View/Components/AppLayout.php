@@ -7,6 +7,13 @@ use Illuminate\View\View;
 
 class AppLayout extends Component
 {
+    public function __construct(
+        public array $menuItems = [],
+        public string $title = '',
+        public string $menuTitle = '',
+        public string $subMenuTitle = '',
+        public int $idApp = 0
+    ) {}
     /**
      * Get the view / contents that represents the component.
      */

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Livewire\Actions\Logout;
 use App\Livewire\Pages\Dashboard\AppsHome;
 use App\Livewire\Pages\Dashboard\AppsInMenu;
@@ -8,10 +9,14 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('auth')->group(function () {
-    
-    Route::get('/', Index::class)->name('dashboard');
-    Route::get('/apps/{id}', AppsHome::class)->name('apps-home');
-    Route::get('/apps/{id1}/{id2}', AppsInMenu::class)->name('apps-in-menu');
+
+    // Route::get('/', Index::class)->name('dashboard');
+    // Route::get('/apps/{id}', AppsHome::class)->name('apps-home');
+    // Route::get('/apps/{id1}/{id2}', AppsInMenu::class)->name('apps-in-menu');
+
+    Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/apps/{id}', [DashboardController::class,'appHome'])->name('apps-home');
+    Route::get('/apps/{id1}/{id2}', [DashboardController::class,'appInMenu'])->name('apps-in-menu');
 
     Route::view('profile', 'profile')
         ->name('profile');
